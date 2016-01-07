@@ -18,8 +18,8 @@ def get_user_input
   gets.chomp
 end
 
-def end_game(n)
-  puts "Sorry, you hit #{n}. Thanks for playing!"
+def end_game(card_total)
+  puts "Sorry, you hit #{card_total}. Thanks for playing!"
 end
 
 def initial_round
@@ -31,13 +31,17 @@ end
 
 def hit?(current_card_total)
   prompt_user
-  get_user_input
-    if get_user_input == "s"
+  x = get_user_input
+    if x == "s"
         return current_card_total
-    elsif get_user_input == "h"
-        return current_card_total + deal_card
+        
+    elsif x == "h"
+        new_card_total = current_card_total + deal_card
+        return new_card_total
+        
     else
         invalid_command
+        prompt_user
     end
 end
 
@@ -53,10 +57,9 @@ def runner
   welcome
   card_total = initial_round
     until card_total > 21
-        hit?(card_total)
+        card_total = hit?(card_total)
+        display_card_total(card_total)
     end
-  end_game
+  end_game(card_total)
 end
-
-runner
     
